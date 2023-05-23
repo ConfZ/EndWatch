@@ -21,7 +21,7 @@ Build the project by our wrapper "afl-clang-fast" (c project), and "afl-clang-fa
 
 For example for a case program.c
 ```
-$./afl-clang-fast program.c
+$./endwatch program.c
 ```
 Then run afl-fuzz to fuzzing on the project.
 ```
