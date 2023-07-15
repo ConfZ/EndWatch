@@ -56,9 +56,9 @@ ifeq "$(origin CC)" "default"
 endif
 
 ifndef AFL_TRACE_PC
-  PROGS      = ../afl-clang-fast ../afl-llvm-pass.so ../afl-llvm-rt.o ../afl-llvm-rt-32.o ../afl-llvm-rt-64.o ../hash-code.o
+  PROGS      = ../endwatch ../loop-handling.so ../afl-llvm-rt.o ../afl-llvm-rt-32.o ../afl-llvm-rt-64.o ../hash-code.o
 else
-  PROGS      = ../afl-clang-fast ../afl-llvm-rt.o ../afl-llvm-rt-32.o ../afl-llvm-rt-64.o ../hash-code.o
+  PROGS      = ../endwatch ../afl-llvm-rt.o ../afl-llvm-rt-32.o ../afl-llvm-rt-64.o ../hash-code.o
 endif
 
 all: test_deps $(PROGS) test_build all_done
@@ -76,11 +76,11 @@ endif
 	@test -f ../afl-showmap || ( echo "[-] Oops, can't find '../afl-showmap'. Be sure to compile AFL first."; exit 1 )
 	@echo "[+] All set and ready to build."
 
-../afl-clang-fast: afl-clang-fast.c | test_deps
+../endwatch: endwatch.c | test_deps
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-	ln -sf afl-clang-fast ../afl-clang-fast++
+	ln -sf endwatch ../endwatch++
 
-../afl-llvm-pass.so: afl-llvm-pass.so.cc| test_deps
+../loop-handling.so: loop-handling.so.cc| test_deps
 	$(CXX) $(CLANG_CFL) -shared $< -o $@ $(CLANG_LFL)
 
 ../nondet-funcs.o: nondet-funcs.c | test_deps
@@ -110,7 +110,7 @@ endif
 
 test_build: $(PROGS)
 	@echo "[*] Testing the CC wrapper and instrumentation output..."
-	unset AFL_USE_ASAN AFL_USE_MSAN AFL_INST_RATIO; AFL_QUIET=1 AFL_PATH=. AFL_CC=$(CC) ../afl-clang-fast $(CFLAGS) ../test-instr.c -o test-instr $(LDFLAGS)
+	unset AFL_USE_ASAN AFL_USE_MSAN AFL_INST_RATIO; AFL_QUIET=1 AFL_PATH=. AFL_CC=$(CC) ../endwatch $(CFLAGS) ../test-instr.c -o test-instr $(LDFLAGS)
 # Use /dev/null to avoid problems with optimization messing up expected
 # branches. See https://github.com/google/AFL/issues/30.
 	../afl-showmap -m none -q -o .test-instr0 ./test-instr < /dev/null
@@ -120,10 +120,10 @@ test_build: $(PROGS)
 	@echo "[+] All right, the instrumentation seems to be working!"
 
 all_done: test_build
-	@echo "[+] All done! You can now use '../afl-clang-fast' to compile programs."
+	@echo "[+] All done! You can now use '../endwatch' to compile programs."
 
 .NOTPARALLEL: clean
 
 clean:
 	rm -f *.o *.so *~ a.out core core.[1-9][0-9]* test-instr .test-instr0 .test-instr1 
-	rm -f $(PROGS) ../afl-clang-fast++
+	rm -f $(PROGS) ../endwatch++
