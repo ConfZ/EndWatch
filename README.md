@@ -17,7 +17,7 @@ $make
 
 ### Testing on program
 
-Build the project by our wrapper "afl-clang-fast" (c project), and "afl-clang-fast++" (c++ project).
+Build the project by our wrapper "endwatch" (c project), and "endwatch++" (c++ project).
 
 For example for a case program.c
 ```
