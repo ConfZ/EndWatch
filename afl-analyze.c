@@ -28,14 +28,6 @@
 */
 
 #define AFL_MAIN
-#include "android-ashmem.h"
-
-#include "config.h"
-#include "types.h"
-#include "debug.h"
-#include "alloc-inl.h"
-#include "hash.h"
-
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -46,14 +38,18 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <ctype.h>
-
 #include <sys/wait.h>
 #include <sys/time.h>
 #include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/resource.h>
-
+#include "android-ashmem.h"
+#include "config.h"
+#include "types.h"
+#include "debug.h"
+#include "alloc-inl.h"
+#include "hash.h"
 static s32 child_pid;                 /* PID of the tested program         */
 
 static u8* trace_bits;                /* SHM with instrumentation bitmap   */
