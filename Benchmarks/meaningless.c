@@ -10,6 +10,8 @@ int main(){
   ...
   int i=func(dir);
   While(i<100){
+     if (i == 49)
+        ReportNonTerm();
       if(i<50)
         {i=i+1;}
       else
