@@ -15,4 +15,7 @@ int main(){
       else
         {i=i-1;}
   }
+  ...
+  ...
+  return 0 
 }
