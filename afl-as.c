@@ -480,16 +480,11 @@ int main(int argc, char** argv) {
   u32 rand_seed;
   int status;
   u8* inst_ratio_str = getenv("AFL_INST_RATIO");
-
   struct timeval tv;
   struct timezone tz;
-
   clang_mode = !!getenv(CLANG_ENV_VAR);
-
   if (isatty(2) && !getenv("AFL_QUIET")) {
-
     SAYF(cCYA "afl-as " cBRI VERSION cRST " by <lcamtuf@google.com>\n");
- 
   } else be_quiet = 1;
 
   if (argc < 2) {
