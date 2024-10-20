@@ -1,11 +1,11 @@
 #include "../config.h"
 #include "../types.h"
 #include "../debug.h"
-int func(dir){
+int func(file *dir){
    ....
 }
 int main(){
-  u8 *dir;
+  file *dir;
   ...
   ...
   int i=func(dir);
