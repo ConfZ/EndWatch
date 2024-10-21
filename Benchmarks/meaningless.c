@@ -10,8 +10,6 @@ int main(){
   ...
   int i=func(dir);
   While(i<100){
-     Check(i);
-     Record(i);
       if(i<50)
         {i=i+1;}
       else
